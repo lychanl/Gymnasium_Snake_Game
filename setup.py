@@ -1,5 +1,3 @@
-# https://github.com/NaLooo/Gym_Snake_Game
-
 from setuptools import setup, find_packages
 import io
 from os import path
