@@ -176,6 +176,7 @@ class Snake:
         screen, clock = game_start(
             self.blocks_x*Block.size, self.blocks_y*Block.size)
         total_r = 0
+
         while pygame.get_init():
             clock.tick(self.fps)
             _, r, d, _ = self.step(handle_input())

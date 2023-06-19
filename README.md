@@ -3,8 +3,7 @@
 [![PyPI](https://img.shields.io/pypi/v/gym-snake-game)](https://pypi.org/project/gym-snake-game/)
 [![License](https://img.shields.io/github/license/NaLooo/Gym_Snake_Game)](https://github.com/NaLooo/Gym_Snake_Game/blob/main/LICENSE)
 
- Snake game for OpenAI gym
-
+![screenshot](/resource/screenshot.png)
 
 ## Quick Start
 ```python
@@ -27,5 +26,27 @@ while True:
 env.close()
 
 ```
+## Available Options
+```python
+import gym_snake_game
 
-**Ming Yu**
+options = {
+    'fps': 60,
+    'max_step': 500,
+    'init_length': 4,
+    'food_reward': 2.0,
+    'dist_reward': None,
+    'living_bonus': 0.0,
+    'death_penalty': -1.0,
+    'width': 40,
+    'height': 40,
+    'block_size': 20,
+    'background_color': (255, 169, 89),
+    'food_color': (255, 90, 90),
+    'head_color': (197, 90, 255),
+    'body_color': (89, 172, 255),
+}
+
+env = gym_snake_game.make('Snake-v0', render_mode='human', **options)
+
+```
