@@ -50,3 +50,10 @@ options = {
 env = gym_snake_game.make('Snake-v0', render_mode='human', **options)
 
 ```
+
+## Requirements
+
+-   Python >= 3.0
+-   Numpy >= 1.23.2
+-   Pygame >= 2.1.3
+-   Gym >= 0.23.0
