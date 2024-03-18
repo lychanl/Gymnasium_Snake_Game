@@ -7,19 +7,19 @@ class Snake:
     def __init__(
         self,
         fps=60,
-        max_step=500,
+        max_step=200,
         init_length=4,
-        food_reward=2.0,
-        dist_reward=None,
+        food_reward=1.0,
+        dist_reward=0.0,
         living_bonus=0.0,
-        death_penalty=-1.0,
-        width=40,
-        height=40,
+        death_penalty=-10.0,
+        width=16,
+        height=16,
         block_size=20,
-        background_color=Color.orange,
-        food_color=Color.red,
-        head_color=Color.purple,
-        body_color=Color.blue,
+        background_color=Color.black,
+        food_color=Color.green,
+        head_color=Color.grey,
+        body_color=Color.white,
     ) -> None:
 
         self.episode = 0
@@ -27,8 +27,7 @@ class Snake:
         self.max_step = max_step
         self.init_length = min(init_length, width//2)
         self.food_reward = food_reward
-        self.dist_reward = (
-            width+height)//4 if dist_reward is None else dist_reward
+        self.dist_reward = dist_reward
         self.living_bonus = living_bonus
         self.death_penalty = death_penalty
         self.blocks_x = width
@@ -40,7 +39,6 @@ class Snake:
         self.food = Food(self.blocks_x, self.blocks_y, food_color)
         Block.size = block_size
 
-        self.map = None
         self.screen = None
         self.clock = None
         self.human_playing = False
@@ -103,41 +101,17 @@ class Snake:
                 dead = True
         if dead:
             reward = self.death_penalty
-        return self.observation(dead), reward, dead, truncated
+        return self.observation(), reward, dead, truncated
 
-    def observation(self, dead=False):
-        dx = self.head.x - self.food.block.x
-        dy = self.head.y - self.food.block.y
-        dx, dy = normalize(dx, dy)
-        d0, d1, d2, d3 = self.calc_distance(dead)
-        return np.array([dx, dy, d0, d1, d2, d3], dtype=np.float32)
-
-    def calc_distance(self, dead):
-        if dead:
-            return 0, 0, 0, 0
-        self.map = np.zeros((self.blocks_x, self.blocks_y), dtype=int)
+    def observation(self):
+        obs = np.zeros((self.blocks_x, self.blocks_y, 3), dtype=np.float32)
+        if 0 <= self.head.x < self.blocks_x and 0 <= self.head.y < self.blocks_y:
+            obs[self.head.x][self.head.y][0] = 1
         for block in self.blocks:
-            self.map[block.x][block.y] = -1
-        self.map[self.food.block.x][self.food.block.y] = 0
-        d0, d1, d2, d3 = 0, 0, 0, 0,
-        x, y = self.head.x, self.head.y - 1
-        while y >= 0 and self.map[x][y] == 0:
-            d0 += 1
-            y -= 1
-        x, y = self.head.x, self.head.y + 1
-        while y < self.blocks_y and self.map[x][y] == 0:
-            d1 += 1
-            y += 1
-        x, y = self.head.x - 1, self.head.y
-        while x >= 0 and self.map[x][y] == 0:
-            d2 += 1
-            x -= 1
-        x, y = self.head.x + 1, self.head.y
-        while x < self.blocks_x and self.map[x][y] == 0:
-            d3 += 1
-            x += 1
-        self.map[self.food.block.x][self.food.block.y] = 1
-        return d0/self.blocks_y, d1/self.blocks_y, d2/self.blocks_x, d3/self.blocks_x
+            if 0 <= block.x < self.blocks_x and 0 <= block.y < self.blocks_y:
+                obs[block.x][block.y][1] = 1
+        obs[self.food.block.x][self.food.block.y][2] = 1
+        return obs
 
     def calc_reward(self):
         if self.dist_reward == 0.0:
@@ -148,7 +122,7 @@ class Snake:
         return (self.dist_reward-d)/self.dist_reward
 
     def grow(self, x, y):
-        body = Block(x, y, Color.blue)
+        body = Block(x, y, self.body_color)
         self.blocks.append(body)
         self.body.append(body)
 
@@ -161,7 +135,6 @@ class Snake:
         return {
             'head': (self.head.x, self.head.y),
             'food': (self.food.block.x, self.food.block.y),
-            'map': self.map.T
         }
 
     def play(self, fps=10, acceleration=True, step=1, frep=10):

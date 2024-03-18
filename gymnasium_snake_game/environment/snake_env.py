@@ -1,17 +1,17 @@
-import gym
-from gym import spaces
+import gymnasium
+from gymnasium import spaces
 from .core import Snake
 
 
-class SnakeEnv(gym.Env):
+class SnakeEnv(gymnasium.Env):
     metadata = {"render_modes": ["human"], "render_fps": 30}
 
     def __init__(self, render_mode=None, **kwargs) -> None:
         self.render_mode = render_mode
         self.action_space = spaces.Discrete(4)
-        self.observation_space = spaces.Box(
-            float("-inf"), float("inf"), shape=(6,))
         self.snake = Snake(**kwargs)
+        self.observation_space = spaces.Box(
+            0, 1, shape=(self.snake.blocks_x, self.snake.blocks_y, 3))
 
     def reset(self, seed=None, options=None):
         self.snake.init()

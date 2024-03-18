@@ -1,4 +1,4 @@
-gym_snake_game.egg-info
+gymnasium_snake_game.egg-info
 *__pycache__/
 test*
 dist

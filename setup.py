@@ -4,7 +4,7 @@ from os import path
 
 # --- get version ---
 version = "unknown"
-with open("gym_snake_game/version.py") as f:
+with open("gymnasium_snake_game/version.py") as f:
     line = f.read().strip()
     version = line.replace("VERSION = ", "").replace("'", '')
 # --- /get version ---
@@ -14,14 +14,13 @@ with io.open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='gym_snake_game',
+    name='gymnasium_snake_game',
     version=version,
-    description='Snake game for OpenAI Gym',
+    description='Snake game for Farama Gymnasium',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/NaLooo/Gym_Snake_Game',
-    author='Ming Yu',
-    author_email='ming.yu@alumni.stonybrook.edu',
+    url='https://github.com/lychanl/Gymnasium_Snake_Game',
+    author='Jakub Łyskawa',
     license='MIT',
     classifiers=[
         'License :: OSI Approved :: MIT License',
@@ -39,5 +38,5 @@ setup(
     keywords='ai, rl, snake',
     packages=find_packages(),
     python_requires='>=3.0',
-    install_requires=['pygame>=2.1.0', 'numpy>=1.15', 'gym>=0.26.2'],
+    install_requires=['pygame>=2.1.0', 'numpy>=1.21', 'gymnasium>=0.29'],
 )

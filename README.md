@@ -1,3 +1,12 @@
+# Snake game for Farama Gymnasium
+
+This project is based on [Snake game for OpenAI Gym](https://github.com/NaLooo/Gym_Snake_Game) by Ming Yu.
+
+Additional changes include:
+ - changing observations to 2D image data
+ - fixing display settings code
+ - changing default parameters, including rewards, board size, and colors palette
+
 # Snake game for OpenAI Gym
 ![Python versions](https://img.shields.io/pypi/pyversions/gym-snake-game)
 [![PyPI](https://img.shields.io/pypi/v/gym-snake-game)](https://pypi.org/project/gym-snake-game/)
@@ -8,10 +17,10 @@
 ## Quick Start
 ```python
 import gym_snake_game
-import gym
+import gymnasium
 
 # both work
-env = gym.make('Snake-v0', render_mode='human')
+env = gymnasium.make('Snake-v0', render_mode='human')
 env = gym_snake_game.make('Snake-v0', render_mode='human')
 env.reset()
 
@@ -56,4 +65,4 @@ env = gym_snake_game.make('Snake-v0', render_mode='human', **options)
 -   Python >= 3.0
 -   Numpy >= 1.23.2
 -   Pygame >= 2.1.3
--   Gym >= 0.23.0
+-   Gymnasium >= 0.29.0

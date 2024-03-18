@@ -56,6 +56,10 @@ class Color:
     blue = (89, 172, 255)
     green_blue = (89, 255, 172)
     purple = (197, 90, 255)
+    black = (0, 0, 0)
+    white = (255, 255, 255)
+    grey = (127, 127, 127)
+    green = (0, 255, 0)
 
 
 class Direction:
@@ -119,7 +123,7 @@ def update_screen(screen, snake, human_playing=False):
     episode = font.render('Episodes: '+str(snake.episode), False, Color.purple)
     step_remain = font.render(
         'Steps Remain: '+str(snake.max_step-snake.current_step), False, Color.purple)
-    screen.fill(Color.orange)
+    screen.fill(snake.background_color)
     screen.blit(score, (20, height))
     if human_playing:
         fps = font.render('Speed: '+str(snake.fps), False, Color.purple)
